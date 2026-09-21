@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aurora.local/schemas/collage-recipe.schema.json",
+  "title": "Aurora Collage Recipe",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "canvas", "layers", "relationships"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "seed": { "type": "integer" },
+    "canvas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["aspectRatio", "density", "breathingRoom"],
+      "properties": {
+        "aspectRatio": { "type": "number", "exclusiveMinimum": 0 },
+        "density": { "type": "number", "minimum": 0, "maximum": 1 },
+        "breathingRoom": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "layers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "x", "y", "width", "height", "rotation", "opacity", "depth"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "kind": {
+            "enum": ["paper", "image", "shape", "texture", "type", "light", "spectral-field"]
+          },
+          "x": { "type": "number" },
+          "y": { "type": "number" },
+          "width": { "type": "number", "exclusiveMinimum": 0 },
+          "height": { "type": "number", "exclusiveMinimum": 0 },
+          "rotation": { "type": "number" },
+          "opacity": { "type": "number", "minimum": 0, "maximum": 1 },
+          "depth": { "type": "number" },
+          "blendMode": { "type": "string" },
+          "clipping": { "type": "string" }
+        }
+      }
+    },
+    "relationships": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["overlapBias", "alignmentBias", "asymmetry", "clustering", "rhythm"],
+      "properties": {
+        "overlapBias": { "type": "number", "minimum": 0, "maximum": 1 },
+        "alignmentBias": { "type": "number", "minimum": 0, "maximum": 1 },
+        "asymmetry": { "type": "number", "minimum": 0, "maximum": 1 },
+        "clustering": { "type": "number", "minimum": 0, "maximum": 1 },
+        "rhythm": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "motion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "drift": { "type": "number", "minimum": 0, "maximum": 1 },
+        "parallax": { "type": "number", "minimum": 0, "maximum": 1 },
+        "revealSequence": { "type": "string" }
+      }
+    }
+  }
+}
